@@ -75,6 +75,18 @@ services:
             - "router"
             - "server"
         command: bash -c "/scripts/client.sh && sleep infinity"
+    traceroute:
+        build:
+            context: .
+            dockerfile: docker/TracerouteDockerfile.dockerfile
+        volumes:
+            - ..:/elocal
+        tty: true
+        cap_add:
+          - NET_ADMIN
+          - NET_RAW
+          - SYS_ADMIN
+        network_mode: host
 networks:
     net1:
         ipam:

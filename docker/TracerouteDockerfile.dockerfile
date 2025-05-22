@@ -1,0 +1,1 @@
+FROM snisioi/retele:2021

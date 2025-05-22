@@ -3,6 +3,11 @@ import requests
 import folium
 from pathlib import Path
 import random
+
+# IT SEEMS THAT OFTEN TRACEROUTE DOES NOT REACH THE DESTINATION
+# TODO: Eliminate unrelated packets(put them in a special queue and print)
+# TODO: CHOOSE BETTER SITES
+
 # Check for the existence of region and also use regionName instead of region
 class IPLocation:
     def __init__(self, json):
@@ -22,6 +27,8 @@ icmp_recv_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO
 # setam timout in cazul in care socketul ICMP la apelul recvfrom nu primeste nimic in buffer
 icmp_recv_socket.settimeout(5)
 
+# Get machine ip
+MY_LOCAL_IP = socket.gethostbyname(socket.gethostname())
 def _traceroute(ip, port, TTL):
     print("Current TTL: ", TTL)
     # setam TTL in headerul de IP pentru socketul de UDP
@@ -37,11 +44,18 @@ def _traceroute(ip, port, TTL):
         # First 4 bits give the size of the IP header in 32-bit words
         ip_header_length = (data[0] & 0x0f) * 4
 
+        # Extract source and destination of the icmp packet for unexpected behaviour
+        src_ip = socket.inet_ntoa(data[12:16])
+        dest_ip = socket.inet_ntoa(data[16:20])
+
+        print(f"SOURCE: {src_ip}, DESTINATION: {dest_ip}")
+        print(f"ICMP RESP TYPE: {data[ip_header_length]}, CODE: {data[ip_header_length + 1]}")
+        
         # data[ip_header_length] = Type, data[ip_header_length + 1] = Code
         if data[ip_header_length] != 11:
             if data[ip_header_length + 1] != 3:
                 addr = None
-                print("Destination host unreachable!")
+                print(f"Destination host unreachable!")
         elif data[ip_header_length + 1] != 0:
             addr = None
             print("Fragment reassembly time exceeded!")
@@ -102,6 +116,8 @@ def getRouteLocations(ip: str) -> list[IPLocation]:
         resp = requests.get(ip_api_url + addr, headers=fake_HTTP_header).json()
         if resp['status'] == 'success':
             locations.append(IPLocation(resp))
+        else:
+            print(f"FAILED RESPONSE: {resp}")
     return locations
 
 def printRouteLocations(out_file, locations: list[IPLocation]):
@@ -123,13 +139,15 @@ def plot_route_on_map(locations: list[IPLocation], output_html_file: str):
     loc_count = len(locations)
 
     for i, loc in enumerate(locations):
-        jitter_scale = 2
+        map_loc = [loc.lat, loc.lon]
 
-        # Add a small random offset
-        display_lat = loc.lat  + random.uniform(-jitter_scale, jitter_scale)
-        display_lon = loc.lon + random.uniform(-jitter_scale, jitter_scale)
+        # Add a small random offset for points that already exist
+        jitter_scale = 0.05
+        if map_loc in points_for_line:
+            map_loc[0] += random.uniform(-jitter_scale, jitter_scale)
+            map_loc[1] += random.uniform(-jitter_scale, jitter_scale) 
 
-        points_for_line.append([display_lat, display_lon])
+        points_for_line.append(map_loc)
         
         # Different text and color for start, intermediate and end hops
         popup_text = f"<b>Hop {i+1}:</b> {loc.ip}<br>{loc.city}, {loc.region}, {loc.country}"
@@ -148,7 +166,6 @@ def plot_route_on_map(locations: list[IPLocation], output_html_file: str):
             tooltip=f"{loc.ip} ({loc.city})",
             icon=folium.Icon(color=marker_color)
         ).add_to(route_map)
-
     print(points_for_line)
     # Connect points using the original, non-jittered coordinates
     if len(points_for_line) > 1:
@@ -163,30 +180,32 @@ def plot_route_on_map(locations: list[IPLocation], output_html_file: str):
 def main():
     region_sites = {
         "Africa": [
-            ("www.uct.ac.za", "137.158.154.230")
-            # ("www.unilag.edu.ng", "196.45.48.5"),
-            # ("www.au.int", "196.1.95.34"),
-            # ("www.kemri.go.ke", "41.204.161.195"),
-            # ("www.moroccoworldnews.com", "172.67.72.169")
+            ("www.uct.ac.za", "137.158.154.230"),
+            ("www.unilag.edu.ng", "196.45.48.5"),
+            ("www.au.int", "196.1.95.34"),
+            ("www.kemri.go.ke", "41.204.161.195"),
+            ("www.moroccoworldnews.com", "172.67.72.169")
+        ],
+        "Asia": [
+            ("www.tokyo-u.ac.jp", "133.11.0.23"),
+            ("www.iitm.ac.in", "14.139.160.3"),
+            ("www.ntu.edu.sg", "155.69.7.49"),
+            ("www.korea.ac.kr", "163.152.6.10"),
+            ("www.cuhk.edu.hk", "137.189.97.31")
+        ],
+        "Australia": [
+            ("www.abc.net.au", "203.2.218.214"),
+            ("www.anu.edu.au", "150.203.2.53"),
+            ("www.sydney.edu.au", "129.78.5.8"),
+            ("www.csiro.au", "138.194.190.20"),
+            ("www.australia.gov.au", "152.91.62.30")
         ]
-        # "Asia": [
-        #     ("www.tokyo-u.ac.jp", "133.11.0.23"),
-        #     ("www.iitm.ac.in", "14.139.160.3"),
-        #     ("www.ntu.edu.sg", "155.69.7.49"),
-        #     ("www.korea.ac.kr", "163.152.6.10"),
-        #     ("www.cuhk.edu.hk", "137.189.97.31")
-        # ],
-        # "Australia": [
-        #     ("www.abc.net.au", "203.2.218.214"),
-        #     ("www.anu.edu.au", "150.203.2.53"),
-        #     ("www.sydney.edu.au", "129.78.5.8"),
-        #     ("www.csiro.au", "138.194.190.20"),
-        #     ("www.australia.gov.au", "152.91.62.30")
-        # ]
     }
 
+    print(f"MY LOCAL IP: {MY_LOCAL_IP}")
     out_file = open('traceroute.md', 'w')
-    out_file.write('# Traceroute paths\n')
+    out_file.write(f'# Traceroute paths starting from {MY_LOCAL_IP}\n\n')
+    out_file.write('Note: The map does not perfectly represent the geolocation of the machines\n\n')
     
     maps_dir = 'maps'
     Path(maps_dir).mkdir(exist_ok=True)
@@ -195,12 +214,13 @@ def main():
         out_file.write("## " + reg + '\n\n')
         Path(f'{maps_dir}/{reg}').mkdir(exist_ok=True)
 
-        for site in sites:
-            out_file.write("- Site: " + site[0] + '(' + site[1] + ')\n\n')
+        for i, site in enumerate(sites):
+            out_file.write(f"{i + 1}. Site: {site[0]}({site[1]})\n\n")
+            out_file.write(f"   - Path: \n")
             locations = getRouteLocations(site[1])
 
             printRouteLocations(out_file, locations)
-            plot_route_on_map(locations, f"{maps_dir}/{reg}/out_map.html")
-
+            plot_route_on_map(locations, f"{maps_dir}/{reg}/out_map_{i + 1}.html")
+            out_file.write(f"   - [Visual map representations]({maps_dir}/{reg}/out_map_{i + 1}.html)\n\n")
 
 main()
