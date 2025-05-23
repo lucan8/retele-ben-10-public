@@ -208,9 +208,9 @@ def solve(region_sites_ips: Dict[str, List[Tuple[str, str]]], hardcoded_ips: boo
     # Chooses start directory based on flag
     start_dir = ""
     if hardcoded_ips:
-        start_dir = "docs/hardcoded_ips"
+        start_dir = "traceroute/docs/hardcoded_ips"
     else:
-        start_dir = "docs/dns_solved_ips"
+        start_dir = "traceroute/docs/dns_solved_ips"
 
     # Create start directory
     Path(start_dir).mkdir(parents=True, exist_ok=True)
@@ -245,7 +245,7 @@ def solve(region_sites_ips: Dict[str, List[Tuple[str, str]]], hardcoded_ips: boo
 
             printRouteLocations(out_file, locations)
             plot_route_on_map(locations, f"{start_dir}/{maps_dir}/{reg}/out_map_{i + 1}.html")
-            out_file.write(f"   - [Visual map representations]({start_dir}/{maps_dir}/{reg}/out_map_{i + 1}.html)\n\n")
+            out_file.write(f"   - [Visual map representations](/{start_dir}/{maps_dir}/{reg}/out_map_{i + 1}.html)\n\n")
 
 def main():
     region_sites_ips = {
