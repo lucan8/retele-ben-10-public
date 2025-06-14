@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_89be008b17f59475a2a871f67bbf5b91 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_89be008b17f59475a2a871f67bbf5b91" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_89be008b17f59475a2a871f67bbf5b91 = L.map(
+                "map_89be008b17f59475a2a871f67bbf5b91",
+                {
+                    center: [43.6547, -79.3623],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 2,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_1b2c6c152d7012ac2d9f320418ad2d73 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_1b2c6c152d7012ac2d9f320418ad2d73.addTo(map_89be008b17f59475a2a871f67bbf5b91);
+        
+    
+            var marker_1b3df2d3e35a3273881260858a790c45 = L.marker(
+                [43.6547, -79.3623],
+                {
+}
+            ).addTo(map_89be008b17f59475a2a871f67bbf5b91);
+        
+    
+            var icon_c5626adcbb8bc260b2cbf772abea146f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b3bb06a81ca68dbda1137e7a940685ab = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_81c3435ba594d97082e3225ebaaa7fa8 = $(`<div id="html_81c3435ba594d97082e3225ebaaa7fa8" style="width: 100.0%; height: 100.0%;"><b>Start (Hop 1):</b> 138.197.249.50<br>Toronto, Ontario, Canada</div>`)[0];
+                popup_b3bb06a81ca68dbda1137e7a940685ab.setContent(html_81c3435ba594d97082e3225ebaaa7fa8);
+            
+        
+
+        marker_1b3df2d3e35a3273881260858a790c45.bindPopup(popup_b3bb06a81ca68dbda1137e7a940685ab)
+        ;
+
+        
+    
+    
+            marker_1b3df2d3e35a3273881260858a790c45.bindTooltip(
+                `<div>
+                     138.197.249.50 (Toronto)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1b3df2d3e35a3273881260858a790c45.setIcon(icon_c5626adcbb8bc260b2cbf772abea146f);
+            
+    
+            var marker_b2fe12130f8251060b2797c657abf627 = L.marker(
+                [40.7232, -74.0051],
+                {
+}
+            ).addTo(map_89be008b17f59475a2a871f67bbf5b91);
+        
+    
+            var icon_93958d1ff6dfe2d2c65389674a9d9852 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_035c42dbb790779200f3106fe382106c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_18a03476942505cd85bd1b121d645249 = $(`<div id="html_18a03476942505cd85bd1b121d645249" style="width: 100.0%; height: 100.0%;"><b>Hop 2:</b> 143.244.192.104<br>New York, New York, United States</div>`)[0];
+                popup_035c42dbb790779200f3106fe382106c.setContent(html_18a03476942505cd85bd1b121d645249);
+            
+        
+
+        marker_b2fe12130f8251060b2797c657abf627.bindPopup(popup_035c42dbb790779200f3106fe382106c)
+        ;
+
+        
+    
+    
+            marker_b2fe12130f8251060b2797c657abf627.bindTooltip(
+                `<div>
+                     143.244.192.104 (New York)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b2fe12130f8251060b2797c657abf627.setIcon(icon_93958d1ff6dfe2d2c65389674a9d9852);
+            
+    
+            var marker_582dcc4ea718b63f9288ea54d445a7a5 = L.marker(
+                [45.5019, -73.5674],
+                {
+}
+            ).addTo(map_89be008b17f59475a2a871f67bbf5b91);
+        
+    
+            var icon_956b890f6a8c3cd94ae714f50efdb86c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_131bab542f2f2249e61fda1ffef92c4e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0fccd6907cf7b1db42f20cc9c82d6e14 = $(`<div id="html_0fccd6907cf7b1db42f20cc9c82d6e14" style="width: 100.0%; height: 100.0%;"><b>Hop 3:</b> 143.244.224.141<br>Montreal, Quebec, Canada</div>`)[0];
+                popup_131bab542f2f2249e61fda1ffef92c4e.setContent(html_0fccd6907cf7b1db42f20cc9c82d6e14);
+            
+        
+
+        marker_582dcc4ea718b63f9288ea54d445a7a5.bindPopup(popup_131bab542f2f2249e61fda1ffef92c4e)
+        ;
+
+        
+    
+    
+            marker_582dcc4ea718b63f9288ea54d445a7a5.bindTooltip(
+                `<div>
+                     143.244.224.141 (Montreal)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_582dcc4ea718b63f9288ea54d445a7a5.setIcon(icon_956b890f6a8c3cd94ae714f50efdb86c);
+            
+    
+            var marker_6c0704cf94c9a94eb2c6ab6da9e2c915 = L.marker(
+                [51.5108, -0.0810928],
+                {
+}
+            ).addTo(map_89be008b17f59475a2a871f67bbf5b91);
+        
+    
+            var icon_2dc83d21bca19063d5b9f9c831e8630c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ade7df6088965c42022d4ab6c5100854 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5a3ab70af046f2fb4e851307817fb1e9 = $(`<div id="html_5a3ab70af046f2fb4e851307817fb1e9" style="width: 100.0%; height: 100.0%;"><b>Hop 4:</b> 195.66.236.81<br>London, England, United Kingdom</div>`)[0];
+                popup_ade7df6088965c42022d4ab6c5100854.setContent(html_5a3ab70af046f2fb4e851307817fb1e9);
+            
+        
+
+        marker_6c0704cf94c9a94eb2c6ab6da9e2c915.bindPopup(popup_ade7df6088965c42022d4ab6c5100854)
+        ;
+
+        
+    
+    
+            marker_6c0704cf94c9a94eb2c6ab6da9e2c915.bindTooltip(
+                `<div>
+                     195.66.236.81 (London)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6c0704cf94c9a94eb2c6ab6da9e2c915.setIcon(icon_2dc83d21bca19063d5b9f9c831e8630c);
+            
+    
+            var marker_e0e3b08c10a51adc6c4aca87a833e420 = L.marker(
+                [-37.8817, 145.0352],
+                {
+}
+            ).addTo(map_89be008b17f59475a2a871f67bbf5b91);
+        
+    
+            var icon_6de6754805f7c0c583dcfc4b98d0a176 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7d78e2912e24064140a31e24f4ec5ddd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3a6a28303d8ba47c634063c1e5de5d38 = $(`<div id="html_3a6a28303d8ba47c634063c1e5de5d38" style="width: 100.0%; height: 100.0%;"><b>Hop 5:</b> 113.197.15.11<br>Caulfield, Victoria, Australia</div>`)[0];
+                popup_7d78e2912e24064140a31e24f4ec5ddd.setContent(html_3a6a28303d8ba47c634063c1e5de5d38);
+            
+        
+
+        marker_e0e3b08c10a51adc6c4aca87a833e420.bindPopup(popup_7d78e2912e24064140a31e24f4ec5ddd)
+        ;
+
+        
+    
+    
+            marker_e0e3b08c10a51adc6c4aca87a833e420.bindTooltip(
+                `<div>
+                     113.197.15.11 (Caulfield)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e0e3b08c10a51adc6c4aca87a833e420.setIcon(icon_6de6754805f7c0c583dcfc4b98d0a176);
+            
+    
+            var marker_28bf2a3ee4d4f70436390fc9cc79dab0 = L.marker(
+                [-35.2828, 149.1283],
+                {
+}
+            ).addTo(map_89be008b17f59475a2a871f67bbf5b91);
+        
+    
+            var icon_e3b9740bbb35ca14d9a713bb8ce3dba0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5c313423faff83519cd38bedb496ed9d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_829abb3ee02a13c49acab0d903caa613 = $(`<div id="html_829abb3ee02a13c49acab0d903caa613" style="width: 100.0%; height: 100.0%;"><b>Hop 6:</b> 138.44.161.3<br>Canberra, Australian Capital Territory, Australia</div>`)[0];
+                popup_5c313423faff83519cd38bedb496ed9d.setContent(html_829abb3ee02a13c49acab0d903caa613);
+            
+        
+
+        marker_28bf2a3ee4d4f70436390fc9cc79dab0.bindPopup(popup_5c313423faff83519cd38bedb496ed9d)
+        ;
+
+        
+    
+    
+            marker_28bf2a3ee4d4f70436390fc9cc79dab0.bindTooltip(
+                `<div>
+                     138.44.161.3 (Canberra)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_28bf2a3ee4d4f70436390fc9cc79dab0.setIcon(icon_e3b9740bbb35ca14d9a713bb8ce3dba0);
+            
+    
+            var marker_4aeced6011982b60623ae098fa0b9311 = L.marker(
+                [-35.25370526735975, 149.147764634804],
+                {
+}
+            ).addTo(map_89be008b17f59475a2a871f67bbf5b91);
+        
+    
+            var icon_6abac62761ebe7f1d1a70b232d2e9428 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_48911bc56d26e554bb78558bc25ed9dc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e1bc6640f060a629c4b45b64a441f841 = $(`<div id="html_e1bc6640f060a629c4b45b64a441f841" style="width: 100.0%; height: 100.0%;"><b>End (Hop 7):</b> 150.203.201.5<br>Canberra, Australian Capital Territory, Australia</div>`)[0];
+                popup_48911bc56d26e554bb78558bc25ed9dc.setContent(html_e1bc6640f060a629c4b45b64a441f841);
+            
+        
+
+        marker_4aeced6011982b60623ae098fa0b9311.bindPopup(popup_48911bc56d26e554bb78558bc25ed9dc)
+        ;
+
+        
+    
+    
+            marker_4aeced6011982b60623ae098fa0b9311.bindTooltip(
+                `<div>
+                     150.203.201.5 (Canberra)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4aeced6011982b60623ae098fa0b9311.setIcon(icon_6abac62761ebe7f1d1a70b232d2e9428);
+            
+    
+            var poly_line_50fdf25d7525567a4ad132bf8256a40e = L.polyline(
+                [[43.6547, -79.3623], [40.7232, -74.0051], [45.5019, -73.5674], [51.5108, -0.0810928], [-37.8817, 145.0352], [-35.2828, 149.1283], [-35.25370526735975, 149.147764634804]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_89be008b17f59475a2a871f67bbf5b91);
+        
+</script>
+</html>

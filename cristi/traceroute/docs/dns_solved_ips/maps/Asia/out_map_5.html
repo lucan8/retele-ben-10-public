@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_397971f675268c473b3c022a92398cca {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_397971f675268c473b3c022a92398cca" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_397971f675268c473b3c022a92398cca = L.map(
+                "map_397971f675268c473b3c022a92398cca",
+                {
+                    center: [40.7232, -74.0051],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 2,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_29494469935ca3c0d474dd51bef56de6 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_29494469935ca3c0d474dd51bef56de6.addTo(map_397971f675268c473b3c022a92398cca);
+        
+    
+            var marker_45b03ca06aa4749eb42d2eb3551169f0 = L.marker(
+                [40.7232, -74.0051],
+                {
+}
+            ).addTo(map_397971f675268c473b3c022a92398cca);
+        
+    
+            var icon_30699fccbca3602ffc0c16b608f35a5c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0ef299c12e44de7c329066db0936ed64 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_43088a10196503275e77c064e95eb277 = $(`<div id="html_43088a10196503275e77c064e95eb277" style="width: 100.0%; height: 100.0%;"><b>Start (Hop 1):</b> 143.244.192.114<br>New York, New York, United States</div>`)[0];
+                popup_0ef299c12e44de7c329066db0936ed64.setContent(html_43088a10196503275e77c064e95eb277);
+            
+        
+
+        marker_45b03ca06aa4749eb42d2eb3551169f0.bindPopup(popup_0ef299c12e44de7c329066db0936ed64)
+        ;
+
+        
+    
+    
+            marker_45b03ca06aa4749eb42d2eb3551169f0.bindTooltip(
+                `<div>
+                     143.244.192.114 (New York)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_45b03ca06aa4749eb42d2eb3551169f0.setIcon(icon_30699fccbca3602ffc0c16b608f35a5c);
+            
+    
+            var marker_68d7a5b5c1154361c08d0d4a59d5bf74 = L.marker(
+                [45.5019, -73.5674],
+                {
+}
+            ).addTo(map_397971f675268c473b3c022a92398cca);
+        
+    
+            var icon_6784c6d7f8a2797f51145bff8cc98f25 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_49836d2662ffdfe4afb503045138333d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_790cb3e80b579acf5925bd5d3384b3bd = $(`<div id="html_790cb3e80b579acf5925bd5d3384b3bd" style="width: 100.0%; height: 100.0%;"><b>Hop 2:</b> 143.244.224.115<br>Montreal, Quebec, Canada</div>`)[0];
+                popup_49836d2662ffdfe4afb503045138333d.setContent(html_790cb3e80b579acf5925bd5d3384b3bd);
+            
+        
+
+        marker_68d7a5b5c1154361c08d0d4a59d5bf74.bindPopup(popup_49836d2662ffdfe4afb503045138333d)
+        ;
+
+        
+    
+    
+            marker_68d7a5b5c1154361c08d0d4a59d5bf74.bindTooltip(
+                `<div>
+                     143.244.224.115 (Montreal)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_68d7a5b5c1154361c08d0d4a59d5bf74.setIcon(icon_6784c6d7f8a2797f51145bff8cc98f25);
+            
+    
+            var marker_66d3edd791512c3f718a3242048cccad = L.marker(
+                [50.9485, 6.90934],
+                {
+}
+            ).addTo(map_397971f675268c473b3c022a92398cca);
+        
+    
+            var icon_0b8a0af0ad6adfaeff7839d5b8c93d1b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ef79993d45db997c67f353029376a4ae = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ba7a19a04e796db6def17dbdf42716ce = $(`<div id="html_ba7a19a04e796db6def17dbdf42716ce" style="width: 100.0%; height: 100.0%;"><b>Hop 3:</b> 80.81.192.121<br>Cologne, North Rhine-Westphalia, Germany</div>`)[0];
+                popup_ef79993d45db997c67f353029376a4ae.setContent(html_ba7a19a04e796db6def17dbdf42716ce);
+            
+        
+
+        marker_66d3edd791512c3f718a3242048cccad.bindPopup(popup_ef79993d45db997c67f353029376a4ae)
+        ;
+
+        
+    
+    
+            marker_66d3edd791512c3f718a3242048cccad.bindTooltip(
+                `<div>
+                     80.81.192.121 (Cologne)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_66d3edd791512c3f718a3242048cccad.setIcon(icon_0b8a0af0ad6adfaeff7839d5b8c93d1b);
+            
+    
+            var marker_800e32b54cb11082e49d2c03cc29551a = L.marker(
+                [21.0278, 105.834],
+                {
+}
+            ).addTo(map_397971f675268c473b3c022a92398cca);
+        
+    
+            var icon_a05a7c72c513a997fe0b4b6b7881173e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4cd49510fa56d79b3404a011c4bcecc5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_66c73bd217d6cbc738739d6d06600948 = $(`<div id="html_66c73bd217d6cbc738739d6d06600948" style="width: 100.0%; height: 100.0%;"><b>Hop 4:</b> 113.171.33.78<br>Hanoi, Hanoi, Vietnam</div>`)[0];
+                popup_4cd49510fa56d79b3404a011c4bcecc5.setContent(html_66c73bd217d6cbc738739d6d06600948);
+            
+        
+
+        marker_800e32b54cb11082e49d2c03cc29551a.bindPopup(popup_4cd49510fa56d79b3404a011c4bcecc5)
+        ;
+
+        
+    
+    
+            marker_800e32b54cb11082e49d2c03cc29551a.bindTooltip(
+                `<div>
+                     113.171.33.78 (Hanoi)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_800e32b54cb11082e49d2c03cc29551a.setIcon(icon_a05a7c72c513a997fe0b4b6b7881173e);
+            
+    
+            var marker_90b21d1e19ecd1bcd2edacfa6fedf17c = L.marker(
+                [20.9947, 105.8],
+                {
+}
+            ).addTo(map_397971f675268c473b3c022a92398cca);
+        
+    
+            var icon_c2d2297fcc5211df3048ff9fa79b43af = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_48d57a85093a0ecba201e13937674553 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9c67bcaf2183ee2855faae9e6771433a = $(`<div id="html_9c67bcaf2183ee2855faae9e6771433a" style="width: 100.0%; height: 100.0%;"><b>Hop 5:</b> 203.162.241.59<br>Thanh Xuân, Hanoi, Vietnam</div>`)[0];
+                popup_48d57a85093a0ecba201e13937674553.setContent(html_9c67bcaf2183ee2855faae9e6771433a);
+            
+        
+
+        marker_90b21d1e19ecd1bcd2edacfa6fedf17c.bindPopup(popup_48d57a85093a0ecba201e13937674553)
+        ;
+
+        
+    
+    
+            marker_90b21d1e19ecd1bcd2edacfa6fedf17c.bindTooltip(
+                `<div>
+                     203.162.241.59 (Thanh Xuân)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_90b21d1e19ecd1bcd2edacfa6fedf17c.setIcon(icon_c2d2297fcc5211df3048ff9fa79b43af);
+            
+    
+            var marker_ba717561bd8dadfa38473069b7549025 = L.marker(
+                [21.035141122002074, 105.82723643035507],
+                {
+}
+            ).addTo(map_397971f675268c473b3c022a92398cca);
+        
+    
+            var icon_cff899e264583a1e043199170b761363 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3877f8ed7e13ac3cb8d4d51054151cc9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_016a105b6e7e169fbc7c374491af4dfe = $(`<div id="html_016a105b6e7e169fbc7c374491af4dfe" style="width: 100.0%; height: 100.0%;"><b>End (Hop 6):</b> 112.137.143.4<br>Hanoi, Hanoi, Vietnam</div>`)[0];
+                popup_3877f8ed7e13ac3cb8d4d51054151cc9.setContent(html_016a105b6e7e169fbc7c374491af4dfe);
+            
+        
+
+        marker_ba717561bd8dadfa38473069b7549025.bindPopup(popup_3877f8ed7e13ac3cb8d4d51054151cc9)
+        ;
+
+        
+    
+    
+            marker_ba717561bd8dadfa38473069b7549025.bindTooltip(
+                `<div>
+                     112.137.143.4 (Hanoi)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ba717561bd8dadfa38473069b7549025.setIcon(icon_cff899e264583a1e043199170b761363);
+            
+    
+            var poly_line_e673f6fa89f070118a2e7ed06820019a = L.polyline(
+                [[40.7232, -74.0051], [45.5019, -73.5674], [50.9485, 6.90934], [21.0278, 105.834], [20.9947, 105.8], [21.035141122002074, 105.82723643035507]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_397971f675268c473b3c022a92398cca);
+        
+</script>
+</html>
