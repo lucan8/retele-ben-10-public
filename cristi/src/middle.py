@@ -16,8 +16,7 @@ gateway_ip = "198.7.0.1"
 server_ip = "198.7.0.2"
 packet_count = 1000
 
-#Given an IP, get the MAC. Broadcast ARP Request for a IP Address. Should recieve
-#an ARP reply with MAC Address
+#Broadcast ARP Request for a IP Address
 def get_mac(ip_address):
     #ARP request is constructed. sr function is used to send/ receive a layer 3 packet
     #Alternative Method using Layer 2: resp, unans =  srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(op=1, pdst=ip_address))
@@ -27,7 +26,6 @@ def get_mac(ip_address):
     return None
 
 #Keep sending false ARP replies to put our machine in the middle to intercept packets
-#This will use our interface MAC address as the hwsrc for the ARP reply
 def arp_poison(src_ip, dest_ip, dest_mac):
     print("ARP POSION ATTTACCCCK!")
     try:
