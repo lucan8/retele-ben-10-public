@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_ba37dc57e42a1e59aa2572388378a194 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_ba37dc57e42a1e59aa2572388378a194" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_ba37dc57e42a1e59aa2572388378a194 = L.map(
+                "map_ba37dc57e42a1e59aa2572388378a194",
+                {
+                    center: [43.6547, -79.3623],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 2,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_d92c64eccc3ac9f74434550cfccb3a71 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_d92c64eccc3ac9f74434550cfccb3a71.addTo(map_ba37dc57e42a1e59aa2572388378a194);
+        
+    
+            var marker_4cfdc3ef37ffbe661ebeb5eb7e474ed0 = L.marker(
+                [43.6547, -79.3623],
+                {
+}
+            ).addTo(map_ba37dc57e42a1e59aa2572388378a194);
+        
+    
+            var icon_1439ea5674e5f07b0c1191b071de53fe = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b178534c2aa07db6b2b36d054ed7177d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_52bcbd40b01591dad278f192f64980f0 = $(`<div id="html_52bcbd40b01591dad278f192f64980f0" style="width: 100.0%; height: 100.0%;"><b>Start (Hop 1):</b> 138.197.249.50<br>Toronto, Ontario, Canada</div>`)[0];
+                popup_b178534c2aa07db6b2b36d054ed7177d.setContent(html_52bcbd40b01591dad278f192f64980f0);
+            
+        
+
+        marker_4cfdc3ef37ffbe661ebeb5eb7e474ed0.bindPopup(popup_b178534c2aa07db6b2b36d054ed7177d)
+        ;
+
+        
+    
+    
+            marker_4cfdc3ef37ffbe661ebeb5eb7e474ed0.bindTooltip(
+                `<div>
+                     138.197.249.50 (Toronto)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4cfdc3ef37ffbe661ebeb5eb7e474ed0.setIcon(icon_1439ea5674e5f07b0c1191b071de53fe);
+            
+    
+            var marker_9902aba3b2d2b65e74ba9378b1fc26eb = L.marker(
+                [40.7232, -74.0051],
+                {
+}
+            ).addTo(map_ba37dc57e42a1e59aa2572388378a194);
+        
+    
+            var icon_b9c4842a935daf52d71150a4ba0d2d46 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f39b4260aab21961c6568c74a289f313 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_90c2de7abbfbb6d2ca5c9e64401083d8 = $(`<div id="html_90c2de7abbfbb6d2ca5c9e64401083d8" style="width: 100.0%; height: 100.0%;"><b>Hop 2:</b> 143.244.192.104<br>New York, New York, United States</div>`)[0];
+                popup_f39b4260aab21961c6568c74a289f313.setContent(html_90c2de7abbfbb6d2ca5c9e64401083d8);
+            
+        
+
+        marker_9902aba3b2d2b65e74ba9378b1fc26eb.bindPopup(popup_f39b4260aab21961c6568c74a289f313)
+        ;
+
+        
+    
+    
+            marker_9902aba3b2d2b65e74ba9378b1fc26eb.bindTooltip(
+                `<div>
+                     143.244.192.104 (New York)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9902aba3b2d2b65e74ba9378b1fc26eb.setIcon(icon_b9c4842a935daf52d71150a4ba0d2d46);
+            
+    
+            var marker_9f94df04e9dbeb2f61857c6187bc906d = L.marker(
+                [45.5019, -73.5674],
+                {
+}
+            ).addTo(map_ba37dc57e42a1e59aa2572388378a194);
+        
+    
+            var icon_7404b0569cde72c82a49685aefe11a31 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f5c1f3e5403904beff71c57ffb00d95c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_354e322357a41cc178e5909a9aab3d15 = $(`<div id="html_354e322357a41cc178e5909a9aab3d15" style="width: 100.0%; height: 100.0%;"><b>Hop 3:</b> 143.244.224.105<br>Montreal, Quebec, Canada</div>`)[0];
+                popup_f5c1f3e5403904beff71c57ffb00d95c.setContent(html_354e322357a41cc178e5909a9aab3d15);
+            
+        
+
+        marker_9f94df04e9dbeb2f61857c6187bc906d.bindPopup(popup_f5c1f3e5403904beff71c57ffb00d95c)
+        ;
+
+        
+    
+    
+            marker_9f94df04e9dbeb2f61857c6187bc906d.bindTooltip(
+                `<div>
+                     143.244.224.105 (Montreal)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9f94df04e9dbeb2f61857c6187bc906d.setIcon(icon_7404b0569cde72c82a49685aefe11a31);
+            
+    
+            var marker_d6f889c1c709f7a6cadd4c0ef220d8c1 = L.marker(
+                [50.9485, 6.90934],
+                {
+}
+            ).addTo(map_ba37dc57e42a1e59aa2572388378a194);
+        
+    
+            var icon_90e53430cc4b8d97d8f840cff418774d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c2252ffdf448c6f305b83288b4501514 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fbb777b8342d47747695b554d4034f9e = $(`<div id="html_fbb777b8342d47747695b554d4034f9e" style="width: 100.0%; height: 100.0%;"><b>Hop 4:</b> 80.81.196.20<br>Cologne, North Rhine-Westphalia, Germany</div>`)[0];
+                popup_c2252ffdf448c6f305b83288b4501514.setContent(html_fbb777b8342d47747695b554d4034f9e);
+            
+        
+
+        marker_d6f889c1c709f7a6cadd4c0ef220d8c1.bindPopup(popup_c2252ffdf448c6f305b83288b4501514)
+        ;
+
+        
+    
+    
+            marker_d6f889c1c709f7a6cadd4c0ef220d8c1.bindTooltip(
+                `<div>
+                     80.81.196.20 (Cologne)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d6f889c1c709f7a6cadd4c0ef220d8c1.setIcon(icon_90e53430cc4b8d97d8f840cff418774d);
+            
+    
+            var marker_883e20ae8fd6dc720bfbc310391a4a96 = L.marker(
+                [55.0386, 82.9425],
+                {
+}
+            ).addTo(map_ba37dc57e42a1e59aa2572388378a194);
+        
+    
+            var icon_fd3160ba9f08daabd17fca0d911313be = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_29f7f9dc1557a7158a186b5d9f738f03 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5540b12c95debdf7c2ff75c9a28d528a = $(`<div id="html_5540b12c95debdf7c2ff75c9a28d528a" style="width: 100.0%; height: 100.0%;"><b>Hop 5:</b> 62.78.94.105<br>Novosibirsk, Novosibirsk Oblast, Russia</div>`)[0];
+                popup_29f7f9dc1557a7158a186b5d9f738f03.setContent(html_5540b12c95debdf7c2ff75c9a28d528a);
+            
+        
+
+        marker_883e20ae8fd6dc720bfbc310391a4a96.bindPopup(popup_29f7f9dc1557a7158a186b5d9f738f03)
+        ;
+
+        
+    
+    
+            marker_883e20ae8fd6dc720bfbc310391a4a96.bindTooltip(
+                `<div>
+                     62.78.94.105 (Novosibirsk)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_883e20ae8fd6dc720bfbc310391a4a96.setIcon(icon_fd3160ba9f08daabd17fca0d911313be);
+            
+    
+            var marker_de538a0befffcf7392fae75988efa11a = L.marker(
+                [55.017797665289315, 82.9429667474502],
+                {
+}
+            ).addTo(map_ba37dc57e42a1e59aa2572388378a194);
+        
+    
+            var icon_41e0752fb940de9e0536e0ce343fdb69 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c6630ac9a5311ff7d246660b217f45bd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_617285c1e40a5f754491d05918f789b1 = $(`<div id="html_617285c1e40a5f754491d05918f789b1" style="width: 100.0%; height: 100.0%;"><b>Hop 6:</b> 62.78.94.106<br>Novosibirsk, Novosibirsk Oblast, Russia</div>`)[0];
+                popup_c6630ac9a5311ff7d246660b217f45bd.setContent(html_617285c1e40a5f754491d05918f789b1);
+            
+        
+
+        marker_de538a0befffcf7392fae75988efa11a.bindPopup(popup_c6630ac9a5311ff7d246660b217f45bd)
+        ;
+
+        
+    
+    
+            marker_de538a0befffcf7392fae75988efa11a.bindTooltip(
+                `<div>
+                     62.78.94.106 (Novosibirsk)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_de538a0befffcf7392fae75988efa11a.setIcon(icon_41e0752fb940de9e0536e0ce343fdb69);
+            
+    
+            var marker_226ed97ac1e8962dcc7d1989d32c0d6b = L.marker(
+                [54.8514, 83.1029],
+                {
+}
+            ).addTo(map_ba37dc57e42a1e59aa2572388378a194);
+        
+    
+            var icon_61e282ff87652e85a113502bc7e98067 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2b767e1f6762fa3a97508d55ff82e64a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c2abeeeef840872f98b8c96c3a2d9622 = $(`<div id="html_c2abeeeef840872f98b8c96c3a2d9622" style="width: 100.0%; height: 100.0%;"><b>Hop 7:</b> 84.237.0.6<br>Novosibirsk, Novosibirsk Oblast, Russia</div>`)[0];
+                popup_2b767e1f6762fa3a97508d55ff82e64a.setContent(html_c2abeeeef840872f98b8c96c3a2d9622);
+            
+        
+
+        marker_226ed97ac1e8962dcc7d1989d32c0d6b.bindPopup(popup_2b767e1f6762fa3a97508d55ff82e64a)
+        ;
+
+        
+    
+    
+            marker_226ed97ac1e8962dcc7d1989d32c0d6b.bindTooltip(
+                `<div>
+                     84.237.0.6 (Novosibirsk)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_226ed97ac1e8962dcc7d1989d32c0d6b.setIcon(icon_61e282ff87652e85a113502bc7e98067);
+            
+    
+            var marker_9b41566e5ebefefdb0a1ada2b96e5ebc = L.marker(
+                [54.8515, 83.1027],
+                {
+}
+            ).addTo(map_ba37dc57e42a1e59aa2572388378a194);
+        
+    
+            var icon_c7e0a3d2252d6f5b1ad320d62289e434 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_916ac37069fca8303c823dc9978195a3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_cee3b7df7492fc853ab9979bcbb99b6d = $(`<div id="html_cee3b7df7492fc853ab9979bcbb99b6d" style="width: 100.0%; height: 100.0%;"><b>End (Hop 8):</b> 217.79.56.233<br>Novosibirsk, Novosibirsk Oblast, Russia</div>`)[0];
+                popup_916ac37069fca8303c823dc9978195a3.setContent(html_cee3b7df7492fc853ab9979bcbb99b6d);
+            
+        
+
+        marker_9b41566e5ebefefdb0a1ada2b96e5ebc.bindPopup(popup_916ac37069fca8303c823dc9978195a3)
+        ;
+
+        
+    
+    
+            marker_9b41566e5ebefefdb0a1ada2b96e5ebc.bindTooltip(
+                `<div>
+                     217.79.56.233 (Novosibirsk)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9b41566e5ebefefdb0a1ada2b96e5ebc.setIcon(icon_c7e0a3d2252d6f5b1ad320d62289e434);
+            
+    
+            var poly_line_7409a28a149cdf3bb2961386b4594cae = L.polyline(
+                [[43.6547, -79.3623], [40.7232, -74.0051], [45.5019, -73.5674], [50.9485, 6.90934], [55.0386, 82.9425], [55.017797665289315, 82.9429667474502], [54.8514, 83.1029], [54.8515, 83.1027]],
+                {"bubblingMouseEvents": true, "color": "purple", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "purple", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_ba37dc57e42a1e59aa2572388378a194);
+        
+</script>
+</html>

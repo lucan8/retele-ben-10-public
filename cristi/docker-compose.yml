@@ -7,7 +7,7 @@ services:
             dockerfile: docker/Dockerfile
         privileged: true
         volumes:
-            - ..:/elocal
+            - ./:/elocal
         tty: true
         cap_add:
           - NET_ADMIN
@@ -24,7 +24,7 @@ services:
             context: .
             dockerfile: docker/Dockerfile
         volumes:
-            - ..:/elocal
+            - ./:/elocal
         tty: true
         cap_add:
           - NET_ADMIN
@@ -43,7 +43,7 @@ services:
             context: .
             dockerfile: docker/Dockerfile
         volumes:
-            - ..:/elocal
+            - ./:/elocal
         tty: true
         cap_add:
           - NET_ADMIN
@@ -62,7 +62,7 @@ services:
             context: .
             dockerfile: docker/Dockerfile
         volumes:
-            - ..:/elocal
+            - ./:/elocal
         tty: true
         cap_add:
           - NET_ADMIN
@@ -74,7 +74,20 @@ services:
         depends_on:
             - "router"
             - "server"
+        privileged: true
         command: bash -c "/scripts/client.sh && sleep infinity"
+    traceroute:
+        build:
+            context: .
+            dockerfile: docker/TracerouteDockerfile.dockerfile
+        volumes:
+            - ./:/elocal
+        tty: true
+        cap_add:
+          - NET_ADMIN
+          - NET_RAW
+          - SYS_ADMIN
+        network_mode: host
 networks:
     net1:
         ipam:
