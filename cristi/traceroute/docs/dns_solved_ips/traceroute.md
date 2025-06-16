@@ -46,7 +46,7 @@ United States - New York - New York -> Canada - Quebec - Montreal -> Germany - N
    - Path: 
 Canada - Ontario - Toronto -> United States - New York - New York -> Canada - Quebec - Montreal -> United Kingdom - England - London -> South Africa - Western Cape - Cape Town -> South Africa - KwaZulu-Natal - Durban -> South Africa - Western Cape - Cape Town -> South Africa - Western Cape - Cape Town -> South Africa - Western Cape - Cape Town
 
-   - [Visual map representations](docs/dns_solved_ips/maps/Africa/out_map_1.html)
+   - [Visual map representations](/cristi/traceroute/docs/dns_solved_ips/maps/Africa/out_map_1.html)
 
 2. Site: www.kenet.or.ke(41.204.160.5)
 
