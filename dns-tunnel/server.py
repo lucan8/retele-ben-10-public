@@ -27,6 +27,7 @@ def handle_dns_query(data, client_address, udp_socket):
     # is nothing to block
     if dns_packet.qr == 0 and dns_packet.qd:
         query_name = dns_packet[DNSQR].qname.decode().rstrip('.')
+        print(f"Query name: {query_name}")
         label_parts = query_name.split('.')
 
         # Expect queries like: chunk0.file.txt.vilgax.crabdance.com
@@ -91,6 +92,7 @@ def main():
 
     while True:
         data, client_address = dns_socket.recvfrom(512)
+        # print(f"Received udp request from {client_address}: {data}")
         handle_dns_query(data, client_address, dns_socket)
 
     dns_socket.close()

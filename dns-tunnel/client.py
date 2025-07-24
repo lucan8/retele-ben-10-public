@@ -3,7 +3,11 @@ import base64
 import hashlib
 from scapy.all import DNS, DNSQR
 
-SERVER_IP = "164.92.244.69"
+# SERVER_IP = "164.92.244.69"
+SERVER_IP = "172.18.0.2"
+# # SERVER_IP = "192.168.100.59"
+# SERVER_IP = "35.242.225.182"
+# SERVER_IP = "10.156.0.2"
 PORT = 53
 BASE_DOMAIN = "vilgax.crabdance.com"
 
@@ -101,22 +105,22 @@ def get_whole_file(sock, file_name):
 def main():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.settimeout(2)
+    sock.sendto(b"hello", (SERVER_IP, PORT))
+    # file_name = "ben10"
+    # get_whole_file(sock, file_name)
+    # print()
 
-    file_name = "ben10"
-    get_whole_file(sock, file_name)
-    print()
+    # # check if md5 hash match
+    # server_md5 = get_md5(sock, file_name)
+    # print("Received MD5 from the server:", server_md5)
 
-    # check if md5 hash match
-    server_md5 = get_md5(sock, file_name)
-    print("Received MD5 from the server:", server_md5)
+    # local_md5 = file_md5(file_name)
 
-    local_md5 = file_md5(file_name)
-
-    if server_md5 != local_md5:
-        print("MD5 hashes don't match, your local file is corrputed")
-        print(f"Expected '{server_md5}' but got '{local_md5}")
-    else:
-        print(f"MD5 hashes match they are {server_md5}")
+    # if server_md5 != local_md5:
+    #     print("MD5 hashes don't match, your local file is corrputed")
+    #     print(f"Expected '{server_md5}' but got '{local_md5}")
+    # else:
+    #     print(f"MD5 hashes match they are {server_md5}")
 
 
 if __name__ == "__main__":
