@@ -4,7 +4,16 @@ import sys
 from scapy.all import DNS, DNSQR
 import base64
 
+# Useful links:
+# Built in types: https://docs.python.org/3/library/stdtypes.html
+# Base64: https://docs.python.org/3/library/base64.html
+# Socket: https://docs.python.org/3/library/socket.html
+
 # TODO:
+# DO THE NUMBER ENCODING RIGHT ON THE SERVER
+# Optimization: Strip the padding when sending a message, add it back on the receiving side beofre decoding
+# Good practice: Encode and decode all data
+# Construct function that adds BASE_DOMAIN to every DNS request
 # After each packet sent, wait for a request for md5 and send it
 # If they don't match resend the packet
 # Also have a timeout of 2-3 sec, if no response comes back resend the packet
@@ -17,7 +26,7 @@ DNS_SERVER_IP = '34.159.249.73'
 DNS_SERVER_PORT = 53
 BASE_DOMAIN = "vilgax.crabdance.com"
 dns_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-dns_socket.settimeout(5)
+dns_socket.settimeout(10)
 
 SOCK_SERVER_PORT = 1080
 SOCK_SERVER_IP = '127.0.0.1'
@@ -28,6 +37,11 @@ CONSTRUCT_REQ = 2 # Query: cmd.remote_sock_id.encoded_http_req
 SEND_REQ = 3 # Query: cmd.remote_sock_id
 
 CHUNK_SIZE = 200
+MAX_LABEL_SIZE = 60 # Make sure it's multiple of 4
+
+# Dummy address to send back to the browser
+DUMMY_IP = '0.0.0.1'
+DUMMY_PORT = 9999
 
 def proc_dns_resp(dns_resp: DNS) -> bytes:
     rr = dns_resp.an[0]
@@ -55,27 +69,34 @@ def forward_to_dns(client_sock: socket.socket, req_addr: str, req_port: int):
     print(f"[+] Remote socket id: {rem_sock_id}")
 
     # Get request from browser and forward it to dns server, encoded
-    http_req_b32 = base64.b64encode(client_sock.recv(4096)).decode('ascii').strip('=').lower()
+    http_req = client_sock.recv(4096)
+    print(f"[+] Received http request of size {len(http_req)}")
+    # print(http_req.decode(errors='ignore'))
+
+    http_req_b32 = base64.b64encode(http_req).decode('ascii')
     rem_http_req = http_req_b32
     chunk_index = 0
     
     # Send request in chunks, also specifying which socket to use
     while len(rem_http_req):
-        print(f"[+] Sending chunk {chunk_index} of the http request")
-        domain = f'{CONSTRUCT_REQ}.{rem_sock_id}.{rem_http_req[:CHUNK_SIZE]}.{BASE_DOMAIN}'
+        chunk = rem_http_req[:MAX_LABEL_SIZE]
+        # print(f"[+] Sending chunk {chunk_index} of the http request")
+        # print(base64.b64decode(chunk).decode(errors='ignore'))
+        domain = f'{CONSTRUCT_REQ}.{rem_sock_id}.{chunk}.{BASE_DOMAIN}'
 
         dns_query = DNS(id=0xAAAA, rd=1, qd=DNSQR(qname=domain, qtype="TXT"))
-        dns_socket.sendto(dns_query, (DNS_SERVER_IP, DNS_SERVER_PORT))
+        dns_socket.sendto(bytes(dns_query), (DNS_SERVER_IP, DNS_SERVER_PORT))
 
         chunk_index += 1
-        rem_http_req = rem_http_req[CHUNK_SIZE:]
+        rem_http_req = rem_http_req[MAX_LABEL_SIZE:]
     
-    # Tell the server to forward the completed message
-    print(f"[+] HTTP request completely sent")
-    domain = f'{SEND_REQ}.{rem_sock_id}'
+    if chunk_index != 0:
+        # Tell the server to forward the completed message
+        print(f"[+] HTTP request completely sent")
+        domain = f'{SEND_REQ}.{rem_sock_id}.{BASE_DOMAIN}'
 
-    dns_query = DNS(id=0xAAAA, rd=1, qd=DNSQR(qname=domain, qtype="TXT"))
-    dns_socket.sendto(dns_query, (DNS_SERVER_IP, DNS_SERVER_PORT))
+        dns_query = DNS(id=0xAAAA, rd=1, qd=DNSQR(qname=domain, qtype="TXT"))
+        dns_socket.sendto(bytes(dns_query), (DNS_SERVER_IP, DNS_SERVER_PORT))
 
 
 def handle_client(sock: socket.socket):
@@ -108,42 +129,17 @@ def handle_client(sock: socket.socket):
     port = int.from_bytes(sock.recv(2))
 
     print(f"Address: {(addr, port)}")
-    # Establish connection0
+    # Establish connection
     try:
+        # Make the browser think we actually connected to something
+        sock.sendall(bytes([SOCKS_VERSION, 0, 0, 1]) + 
+                     socket.inet_pton(socket.AF_INET, DUMMY_IP) +
+                     DUMMY_PORT.to_bytes(2, 'big'))
         forward_to_dns(sock, addr, port)
-        remote_sock = socket.create_connection((addr, port))
-        bind_addr = remote_sock.getsockname()
-        print(f"Bound address: {bind_addr}")
-        if len(bind_addr) == 2: # IPV4
-            sock.sendall(bytes([SOCKS_VERSION, 0, 0, 1]) + 
-                         socket.inet_pton(socket.AF_INET, bind_addr[0]) +
-                         bind_addr[1].to_bytes(2, 'big'))
-        elif len(bind_addr) == 4: # IPV6
-             sock.sendall(bytes([SOCKS_VERSION, 0, 0, 4]) + 
-                          socket.inet_pton(socket.AF_INET6, bind_addr[0]) +
-                          bind_addr[1].to_bytes(2, 'big'))
-        
-        # # Keep conversation going with remote
-        # threading.Thread(target=forward, args=(sock, remote_sock,)).start()
-        # threading.Thread(target=forward, args=(remote_sock, sock)).start()
     except Exception as e:
         print(f"ERROR: Establishing connection: {e}")
         sock.close()
 
-def forward(src_sock : socket.socket, dest_sock: socket.socket):
-    src_sock_addr = src_sock.getsockname()
-    dest_sock_addr = dest_sock.getsockname()
-    print(f"Forwarding packets from {src_sock_addr} to {dest_sock_addr}")
-    try:
-        while True:
-            data = src_sock.recv(4096)
-            print(f"Sending data from {src_sock_addr} to {dest_sock_addr}: {len(data)} bytes")
-            if not data:
-                break
-            dest_sock.sendall(data)
-    finally:
-        src_sock.close()
-        dest_sock.close()
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.bind((SOCK_SERVER_IP, SOCK_SERVER_PORT))
@@ -160,4 +156,5 @@ while True:
     print("[+] Accepted a new connection")
     # threading.Thread(target=handle_client, args=(serv_sock,)).start()
     handle_client(serv_sock)
+    # break # Only for now
 
