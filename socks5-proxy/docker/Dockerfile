@@ -11,6 +11,6 @@ WORKDIR /elocal
 
 COPY server.py /elocal/server.py
 
-EXPOSE 49152/udp
+EXPOSE 53/udp
 
 CMD ["python3", "-u", "server.py"]

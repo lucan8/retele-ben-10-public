@@ -9,6 +9,6 @@ services:
     volumes:
       - ./server.py:/elocal/server.py
     ports:
-      - "49152:49152/udp"
+      - "53:53/udp"
     restart: always
     container_name: local_dns_resolver_for_socks
