@@ -389,12 +389,16 @@ def handle_dns_query(data: bytes):
     else:
         print("[ERROR] Invalid DNS packet")
 
-print(f"Listening for DNS queries on interface ({DNS_SERVER_IP}):{DNS_SERVER_PORT}...")    
-dns_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-dns_socket.bind((DNS_SERVER_IP, DNS_SERVER_PORT))
-forward_from_dns()
+def main():
+    global DNS_SERVER_IP, DNS_SERVER_PORT, TEST_ADDR
+    print(f"Listening for DNS queries on interface ({DNS_SERVER_IP}):{DNS_SERVER_PORT}...")    
+    dns_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    dns_socket.bind((DNS_SERVER_IP, DNS_SERVER_PORT))
+    forward_from_dns()
 
-# Test connection
-print(f"[+] Testing connenction to {TEST_ADDR}")
-socket.create_connection(TEST_ADDR)
-print(f"[+] Connection successful")
+    # Test connection
+    # print(f"[+] Testing connenction to {TEST_ADDR}")
+    # socket.create_connection(TEST_ADDR)
+    # print(f"[+] Connection successful")
+
+main()

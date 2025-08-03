@@ -9,28 +9,13 @@ from typing import Union
 import textwrap
 import time
 
-# TODO: Do the necessary changes on the server side
-# resend msg processing also needs to be done
-# CONSTRUCT needs changes as well
-# Work from this pc and use VPS only for tests
-# SEND HASH FOR PACKETS AS WELL, CORRUPTED PACKETS WILL BE DROPED(resend)
+# Useful links:
+# Built in types: https://docs.python.org/3/library/stdtypes.html
+# Base64: https://docs.python.org/3/library/base64.html
+# Socket: https://docs.python.org/3/library/socket.html
+# Scapy: https://scapy.readthedocs.io/en/latest/api/scapy.html
+# Hashlib: https://docs.python.org/3/library/hashlib.html
 
-# DNS socket restrictions:
-    # Only one thread does recv and chooses to what connection the packet is destined
-    # Any number of threads can send dns packets
-# Sender
-    # Send all packets
-    # Send the "send" packet and wait for "ok"/"re-send" message from receiver 5 seconds then re-send "send" packet as needed
-    # Flow: send packets -> send "send" packet -> wait ok/re-send, ok: exit, re-send->loop
-# Receiver
-    # On "send" packet receival: 
-        # If packets are missing send a packet asking for missing packets
-
-
-# When sending chunks set in domain chunk number, the number of total chunks
-# Change RemoteConn buffer to hold a list of packets that will be re-ordered by chunk number and concatenated
-# and the number of expected packets 
-# When trying to send, if any packets are missing, send a request for missing packets
 class Message:
     def __init__(self, data: str, seq_nr: int):
         self.data = data
@@ -140,25 +125,6 @@ class RemoteConn:
     
     def __del__(self):
         self.rem_sock.close()
-
-# Useful links:
-# Built in types: https://docs.python.org/3/library/stdtypes.html
-# Base64: https://docs.python.org/3/library/base64.html
-# Socket: https://docs.python.org/3/library/socket.html
-# Scapy: https://scapy.readthedocs.io/en/latest/api/scapy.html
-# Hashlib: https://docs.python.org/3/library/hashlib.html
-
-# TODO:
-# Critical: Make order for packets
-# Critical: Avoid timeouts from browser
-# Critical: Send the number of packets that are expected to be sent
-# Optimization: Strip the padding when sending a message, add it back on the receiving side beofre decoding
-# Optimization: Determine the remaining TXT size dynamically
-# Good practice: Encode and decode all data
-# After each packet sent, wait for a request for md5 and send it
-# If they don't match resend the packet
-# Also have a timeout of 2-3 sec, if no response comes back resend the packet
-# SHOULDN'T THE PACKET GO THROUGH MULTIPLE DNS SERVERS AND GET RID OF BASE_DOMAIN???
 
 SOCKS_VERSION = 5
 
@@ -428,25 +394,28 @@ def handle_client(sock: socket.socket):
         print(f"ERROR: Establishing connection: {traceback.format_exc()}")
         sock.close()
 
-print(f"[+] Listening for DNS responses from {(DNS_SERVER_IP, DNS_SERVER_PORT)}")
-threading.Thread(target=forward_from_dns).start()
+def main():
+    global DNS_SERVER_IP, DNS_SERVER_PORT
+    
+    print(f"[+] Listening for DNS responses from {(DNS_SERVER_IP, DNS_SERVER_PORT)}")
+    threading.Thread(target=forward_from_dns).start()
 
-# Socket for new TCP conncection with browser
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.bind((SOCK_SERVER_IP, SOCK_SERVER_PORT))
-sock.listen(5)
+    # Socket for new TCP conncection with browser
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.bind((SOCK_SERVER_IP, SOCK_SERVER_PORT))
+    sock.listen(5)
 
-print(f"[+] SOCKS5 server listeing on interface: {(SOCK_SERVER_IP, SOCK_SERVER_PORT)}")
+    print(f"[+] SOCKS5 server listeing on interface: {(SOCK_SERVER_IP, SOCK_SERVER_PORT)}")
 
-# Test DNS server
-# dns_socket.sendto(b"hello", (DNS_SERVER_IP, DNS_SERVER_PORT))
-# forward_to_dns(None, DNS_SERVER_IP, DNS_SERVER_PORT)
+    # Test DNS server
+    # dns_socket.sendto(b"hello", (DNS_SERVER_IP, DNS_SERVER_PORT))
+    # forward_to_dns(None, DNS_SERVER_IP, DNS_SERVER_PORT)
 
-while True:
-    serv_sock, addr = sock.accept()
-    print(f"[+] Accepted a new connection: {addr}")
-    # threading.Thread(target=handle_client, args=(serv_sock,)).start()
-    try:
-        handle_client(serv_sock)
-    except Exception as e:
-        print(f"[+] Exception handing client {addr}: {traceback.format_exc()}")
+    while True:
+        serv_sock, addr = sock.accept()
+        print(f"[+] Accepted a new connection: {addr}")
+        # threading.Thread(target=handle_client, args=(serv_sock,)).start()
+        try:
+            handle_client(serv_sock)
+        except Exception as e:
+            print(f"[+] Exception handing client {addr}: {traceback.format_exc()}")
